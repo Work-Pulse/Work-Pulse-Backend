@@ -11,5 +11,5 @@ const TaskSchema = new mongoose.Schema({
     deadline: { type: String, required: true }
 });
 
-const TaskModel = mongoose.model('task', TaskSchema);
+const TaskModel = mongoose.model('tasks', TaskSchema);
 module.exports = TaskModel;
