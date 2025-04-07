@@ -31,8 +31,15 @@ const server = app.listen(port, host, () => {
 });
 
 const PostRouter = require('./routers/PostRoutes');
+const employeeRouter = require('./routers/EmployeeManagementRouter')
+app.use ('/employee',employeeRouter)
 
 app.use('/api',router)
 app.use('/api', TaskAndProjectRouter);
 app.use('/post',PostRouter);
+
 app.use('/api',router)
+
+
+
+
