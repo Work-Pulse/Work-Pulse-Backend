@@ -33,6 +33,9 @@ const PostRouter = require('./routers/PostRoutes');
 const employeeRouter = require('./routers/EmployeeManagementRouter')
 app.use ('/employee',employeeRouter)
 
+const LeaveRouter = require('./routers/LeaveApprovalRouter')
+app.use ('/leave',LeaveRouter)
+
 app.use('/api',router)
 
 app.use('/post',PostRouter);
