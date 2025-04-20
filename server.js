@@ -38,7 +38,7 @@ app.use('/api',router)
 app.use('/api', TaskAndProjectRouter);
 app.use('/post',PostRouter);
 
-app.use('/api',router)
+
 
 
 
