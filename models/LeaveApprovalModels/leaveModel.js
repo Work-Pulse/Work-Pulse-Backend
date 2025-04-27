@@ -2,12 +2,13 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const LeaveSchema = new Schema({
-    
-    leaveType: String,
-    startDate: Date,
-    endDate: Date,
-    reason: String,
+    employeeName: { type: String, required: true },
+    leaveType: { type: String, required: true },
+    startDate: { type: Date, required: true },
+    endDate: { type: Date, required: true },
+    leaveTime: { type: String, required: true }, // Keep time as string, like "14:00"
 });
+
 
 const leaverequest = mongoose.model("leaverequest", LeaveSchema);
 

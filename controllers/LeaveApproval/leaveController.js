@@ -16,55 +16,54 @@ const fetchLeave = async (req, res) => {
 };
 
 //create
-const createLeave = async (req, res) => {
-//   const title = req.body.title;
-//   const body = req.body.body;
 
-const{
+const createLeave = async (req, res) => {
+  const {
+    employeeName,
     leaveType,
     startDate,
     endDate,
-    reason
-} = req.body;
+    leaveTime
+  } = req.body;
 
   const leave = await leaveModel.create({
-    // title: title,
-    // body: body
-    leaveType: leaveType,
-    startDate: startDate,
-    endDate: endDate,
-    reason: reason
+    employeeName,
+    leaveType,
+    startDate,
+    endDate,
+    leaveTime
   });
 
- 
-  res.json({leave:leave})
+  res.json({ leave });
 };
 
+
 //update
+
 const updateLeave = async (req, res) => {
   const leaveId = req.params.id;
 
-//   const title = req.body.title;
-//   const body = req.body.body;
-
-const{
+  const {
+    employeeName,
     leaveType,
     startDate,
     endDate,
-    reason
-} = req.body;
+    leaveTime
+  } = req.body;
 
   await leaveModel.findByIdAndUpdate(leaveId, {
-    leaveType: leaveType,
-    startDate: startDate,
-    endDate: endDate,
-    reason: reason
+    employeeName,
+    leaveType,
+    startDate,
+    endDate,
+    leaveTime
   });
 
   const leave = await leaveModel.findById(leaveId);
 
-  res.json({ leave: leave });
+  res.json({ leave });
 };
+
 
 //delete
 const deleteLeave = async (req, res) => {
