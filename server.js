@@ -1,4 +1,5 @@
 //Import Dependencies
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -12,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 //Database Connection
-const uri = 'mongodb+srv://Yasiru:ynb89@cluster0.bg2dx4x.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+const uri = process.env.MONGO_URI;
 const connect = async() => {
     try {
         await mongoose.connect(uri);
