@@ -6,7 +6,7 @@ const LeaveSchema = new Schema({
     leaveType: { type: String, required: true },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
-    leaveTime: { type: String, required: true }, // Keep time as string, like "14:00"
+    leaveTime: { type: String }, // Keep time as string, like "14:00"
 });
 
 
