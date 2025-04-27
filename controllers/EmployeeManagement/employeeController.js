@@ -119,6 +119,7 @@ const loginEmployee = async (req, res) => {
 
   try {
     const employee = await employeeModel.findOne({ officeMail });
+  
 
     if (!employee) {
       return res.status(404).json({ error: "Employee not found" });
@@ -139,6 +140,8 @@ const loginEmployee = async (req, res) => {
         designation: employee.designation,
         department: employee.department,
         officeMail: employee.officeMail,
+        joinDate: employee.joinDate,
+        birthday: employee.birthday,
       },
     });
   } catch (error) {
