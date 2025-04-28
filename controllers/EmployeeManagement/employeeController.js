@@ -143,6 +143,30 @@ const loginEmployee = async (req, res) => {
   }
 };
 
+// Fetch Employee Details by officeMail
+const getEmployeeData = async (req, res) => {
+  const { officeMail } = req.params;
+
+  try {
+    const employee = await employeeModel.findOne({ officeMail });
+
+    if (!employee) {
+      return res.status(404).json({ error: "Employee not found" });
+    }
+
+    res.json({
+      id: employee.id,
+      firstName: employee.firstName,
+      lastName: employee.lastName,
+      designation: employee.designation,
+      department: employee.department,
+    });
+  } catch (error) {
+    console.error("Error fetching employee data:", error);
+    res.status(500).json({ error: "Failed to fetch employee data" });
+  }
+};
+
 
 module.exports = {
   fetchEmployees,
@@ -150,5 +174,6 @@ module.exports = {
   createEmployee,
   updateEmployee,
   deleteEmployee,
-  loginEmployee
+  loginEmployee,
+  getEmployeeData
 };
