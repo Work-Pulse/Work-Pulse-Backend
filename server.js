@@ -7,8 +7,9 @@ const port = 3030;
 const host = '127.0.0.1';
 const mongoose = require('mongoose');
 const router = require('./routers/testRouter');
+const TaskAndProjectRouter = require('./routers/TaskAndProjectRouter');
 
-//Use Dependecies
+// Use Dependencies
 app.use(cors());
 app.use(express.json());
 
@@ -25,16 +26,17 @@ const connect = async() => {
 
 connect();
 
-//Server 
+// Server
 const server = app.listen(port, host, () => {
     console.log(`Server is running on ${server.address().port}`);
 });
 
+// Routes
 const PostRouter = require('./routers/PostRoutes');
+const employeeRouter = require('./routers/EmployeeManagementRouter');
+app.use('/employee', employeeRouter);
 
-app.use('/api',router)
+app.use('/api', router);
+app.use('/api', TaskAndProjectRouter);
+app.use('/post', PostRouter);
 
-app.use('/post',PostRouter);
-app.use('/api',router)
-app.use('/api',router)
-app.use('/api',router)
