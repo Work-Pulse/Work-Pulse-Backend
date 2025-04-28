@@ -1,5 +1,6 @@
 const employeeModel = require("../../models/EmployeeManagementModels/employeeModel");
 const bcrypt = require("bcryptjs");
+const firebaseAdmin = require('firebase-admin');
 
 // Fetch All Employees
 const fetchEmployees = async (req, res) => {
@@ -115,30 +116,25 @@ const deleteEmployee = async (req, res) => {
 
 // Employee Login with officeMail + password
 const loginEmployee = async (req, res) => {
-  const { officeMail, password } = req.body;
+  const { officeMail, firebaseToken } = req.body;
 
   try {
+    // Verify Firebase ID token first
+    const decodedToken = await firebaseAdmin.auth().verifyIdToken(firebaseToken);
+
+    // Fetch employee data based on officeMail from MongoDB Atlas
     const employee = await employeeModel.findOne({ officeMail });
 
     if (!employee) {
       return res.status(404).json({ error: "Employee not found" });
     }
 
-    const isMatch = await bcrypt.compare(password, employee.password);
-
-    if (!isMatch) {
-      return res.status(401).json({ error: "Invalid credentials" });
-    }
-
+    // If employee found, send back only the officeMail and Firebase UID
     res.json({
       message: "Login successful",
       employee: {
-        id: employee._id,
-        firstName: employee.firstName,
-        lastName: employee.lastName,
-        designation: employee.designation,
-        department: employee.department,
         officeMail: employee.officeMail,
+        firebaseUID: decodedToken.uid
       },
     });
   } catch (error) {
@@ -146,6 +142,7 @@ const loginEmployee = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+
 
 module.exports = {
   fetchEmployees,

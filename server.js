@@ -6,8 +6,10 @@ const cors = require('cors');
 const port = 3030;
 const host = '127.0.0.1';
 const mongoose = require('mongoose');
-const router = require('./routers/testRouter');
-const TaskAndProjectRouter = require('./routers/TaskAndProjectRouter');
+const firebaseAdmin = require('firebase-admin');
+
+
+const verifyToken = require('./middlewares/authMiddleware'); // Firebase authentication middleware
 
 // Use Dependencies
 app.use(cors());
@@ -32,11 +34,11 @@ const server = app.listen(port, host, () => {
 });
 
 // Routes
-const PostRouter = require('./routers/PostRoutes');
-const employeeRouter = require('./routers/EmployeeManagementRouter');
-app.use('/employee', employeeRouter);
 
-app.use('/api', router);
+const employeeRouter = require('./routers/EmployeeManagementRouter');
+const TaskAndProjectRouter = require('./routers/TaskAndProjectRouter');
+
+app.use('/employee', verifyToken, employeeRouter);
 app.use('/api', TaskAndProjectRouter);
-app.use('/post', PostRouter);
+
 
