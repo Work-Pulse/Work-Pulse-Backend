@@ -108,10 +108,15 @@ const updateEmployee = async (req, res) => {
 
 // Delete Employee
 const deleteEmployee = async (req, res) => {
-  const employeeId = req.params.id;
-  await employeeModel.deleteOne({ _id: employeeId });
-  res.json({ success: "Employee deleted" });
+  try {
+    await employeeModel.findByIdAndDelete(req.params.id);
+    res.json({ message: "Employee deleted successfully" });
+  } catch (error) {
+    console.error("Delete error:", error);
+    res.status(500).json({ error: "Failed to delete employee" });
+  }
 };
+
 
 // Employee Login with officeMail + password
 const loginEmployee = async (req, res) => {
