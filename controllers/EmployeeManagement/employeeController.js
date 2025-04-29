@@ -75,7 +75,7 @@ const updateEmployee = async (req, res) => {
     birthday,
     address,
     password,
-    confirmPassword
+    //confirmPassword
   } = req.body;
 
   try {
@@ -94,8 +94,8 @@ const updateEmployee = async (req, res) => {
       joinDate,
       birthday,
       address,
-      password: hashedPassword,
-      confirmPassword: hashedPassword
+     // password: hashedPassword,
+     // confirmPassword: hashedPassword
     });
 
     const updatedEmployee = await employeeModel.findById(employeeId);
