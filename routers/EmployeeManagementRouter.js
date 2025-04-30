@@ -11,6 +11,6 @@ router.put("/employees/:id", employeeController.updateEmployee);
 router.delete("/employees/:id", employeeController.deleteEmployee);
 router.get("/employees", employeeController.fetchEmployees);
 router.post("/employee/login", employeeController.loginEmployee);
-router.get("/employee/data/:officeMail", employeeController.getEmployeeData);  // Use the combined function
+router.get("/employee/data/:officeMail", employeeController.getEmployeeData); 
 
 module.exports = router;
