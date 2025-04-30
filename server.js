@@ -8,6 +8,8 @@ const host = '127.0.0.1';
 const mongoose = require('mongoose');
 const firebaseAdmin = require('firebase-admin');
 
+const employeeRouter = require('./routers/EmployeeManagementRouter');
+const TaskAndProjectRouter = require('./routers/TaskAndProjectRouter');
 
 const verifyToken = require('./middlewares/authMiddleware'); // Firebase authentication middleware
 
@@ -34,9 +36,6 @@ const server = app.listen(port, host, () => {
 });
 
 // Routes
-
-const employeeRouter = require('./routers/EmployeeManagementRouter');
-const TaskAndProjectRouter = require('./routers/TaskAndProjectRouter');
 
 app.use('/employee', verifyToken, employeeRouter);
 app.use('/api', TaskAndProjectRouter);
