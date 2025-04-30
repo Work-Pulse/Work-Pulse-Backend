@@ -40,5 +40,9 @@ const TaskAndProjectRouter = require('./routers/TaskAndProjectRouter');
 
 app.use('/employee', verifyToken, employeeRouter);
 app.use('/api', TaskAndProjectRouter);
+const LeaveRouter = require('./routers/LeaveApprovalRouter')
+app.use ('/leave',LeaveRouter)
+
+app.use('/api',router)
 
 
