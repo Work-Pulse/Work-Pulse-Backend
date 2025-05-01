@@ -7,7 +7,7 @@ const LeaveSchema = new Schema({
   leaveType: { 
     type: String, 
     required: true,
-    enum: ["Annual", "Sick", "Half Day", "Other"], // Example leave types
+    enum: ["Annual", "Sick", "Half Day", "Casual"], // Example leave types
   },
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
