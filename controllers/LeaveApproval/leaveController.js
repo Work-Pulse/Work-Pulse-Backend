@@ -7,11 +7,22 @@ const fetchLeaves = async (req, res) => {
   res.json({ leaves: leaves });
 };
 
+//fetch leave details by officemail
 const fetchLeave = async (req, res) => {
-  const officeMail = req.params.officemail;
-  const leave = await leaveModel.find({ officeMail });
-  res.json({ leave });
+  const { officemail } = req.params;
+  try {
+    const leaves = await leaveModel.find({ officeMail: officemail });
+    if (!leaves || leaves.length === 0) {
+      return res.status(404).json({ error: "No leave records found" });
+    }
+
+    res.json(leaves);
+  } catch (error) {
+    console.error("Error fetching leave details:", error);
+    res.status(500).json({ error: "Failed to fetch leave details" });
+  }
 };
+
 
 
 //create
