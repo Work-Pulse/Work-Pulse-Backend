@@ -8,18 +8,18 @@ const fetchLeaves = async (req, res) => {
 };
 
 const fetchLeave = async (req, res) => {
-  const leaveId = req.params.id;
-
-  const leave = await leaveModel.findById(leaveId);
-
-  res.json({ leave: leave });
+  const officeMail = req.params.officemail;
+  const leave = await leaveModel.find({ officeMail });
+  res.json({ leave });
 };
+
 
 //create
 
 const createLeave = async (req, res) => {
   const {
-    employeeName,
+    firstName,
+    officeMail,
     leaveType,
     startDate,
     endDate,
@@ -27,7 +27,8 @@ const createLeave = async (req, res) => {
   } = req.body;
 
   const leave = await leaveModel.create({
-    employeeName,
+    firstName,
+    officeMail,
     leaveType,
     startDate,
     endDate,
@@ -44,7 +45,8 @@ const updateLeave = async (req, res) => {
   const leaveId = req.params.id;
 
   const {
-    employeeName,
+    firstName,
+    officeMail,
     leaveType,
     startDate,
     endDate,
@@ -52,7 +54,8 @@ const updateLeave = async (req, res) => {
   } = req.body;
 
   await leaveModel.findByIdAndUpdate(leaveId, {
-    employeeName,
+    firstName,
+    officeMail,
     leaveType,
     startDate,
     endDate,
