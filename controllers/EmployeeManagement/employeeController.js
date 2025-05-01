@@ -38,21 +38,6 @@ const fetchEmployees = async (req, res) => {
   }
 };
 
-// Fetch Single Employee by employeeId (Authenticated)
-const fetchEmployee = async (req, res) => {
-  const employeeId = req.params.id;
-  try {
-    const employee = await employeeModel.findOne({ employeeId });
-    if (!employee) {
-      return res.status(404).json({ error: "Employee not found" });
-    }
-    res.json({ employee });
-  } catch (error) {
-    console.error("Error fetching employee:", error);
-    res.status(500).json({ error: "Failed to fetch employee" });
-  }
-};
-
 // Create Employee (Authenticated)
 const createEmployee = async (req, res) => {
   const {
@@ -95,69 +80,6 @@ const createEmployee = async (req, res) => {
   } catch (error) {
     console.error("Create Employee Error:", error);
     res.status(500).json({ error: "Failed to register employee" });
-  }
-};
-
-module.exports = {
-  createEmployee
-};
-
-// Update Employee (Authenticated)
-const updateEmployee = async (req, res) => {
-  const employeeId = req.params.id;
-  const {
-    firstName,
-    lastName,
-    designation,
-    department,
-    officeMail,
-    personalMail,
-    officePhone,
-    personalPhone,
-    joinDate,
-    birthday,
-    address,
-    password,
-    confirmPassword
-  } = req.body;
-
-  try {
-    // Hash new password (if updated)
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    await employeeModel.findByIdAndUpdate(employeeId, {
-      firstName,
-      lastName,
-      designation,
-      department,
-      officeMail,
-      personalMail,
-      officePhone,
-      personalPhone,
-      joinDate,
-      birthday,
-      address,
-      password: hashedPassword,
-      confirmPassword: hashedPassword
-    });
-
-    const updatedEmployee = await employeeModel.findById(employeeId);
-    res.json({ employee: updatedEmployee });
-  } catch (error) {
-    console.error("Update Employee Error:", error);
-    res.status(500).json({ error: "Failed to update employee" });
-  }
-};
-
-// Delete Employee (Authenticated)
-const deleteEmployee = async (req, res) => {
-  const employeeId = req.params.id;
-  try {
-    await employeeModel.deleteOne({ _id: employeeId });
-    res.json({ success: "Employee deleted" });
-  } catch (error) {
-    console.error("Delete Employee Error:", error);
-    res.status(500).json({ error: "Failed to delete employee" });
   }
 };
 
@@ -216,10 +138,7 @@ const getEmployeeData = async (req, res) => {
 
 module.exports = {
   fetchEmployees,
-  fetchEmployee,
   createEmployee,
-  updateEmployee,
-  deleteEmployee,
   loginEmployee,
   getEmployeeData,
   authenticate
