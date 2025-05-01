@@ -129,12 +129,20 @@ const getEmployeeData = async (req, res) => {
       lastName: employee.lastName,
       designation: employee.designation,
       department: employee.department,
+      officeMail: employee.officeMail,
+      personalMail: employee.personalMail,
+      officePhone: employee.officePhone,
+      personalPhone: employee.personalPhone,
+      birthday: employee.birthday,
+      joinDate: employee.joinDate,
+      address: employee.address
     });
   } catch (error) {
     console.error("Error fetching employee data:", error);
     res.status(500).json({ error: "Failed to fetch employee data" });
   }
 };
+
 
 module.exports = {
   fetchEmployees,

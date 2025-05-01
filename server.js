@@ -37,7 +37,7 @@ const EmployeeManagementRouter = require('./routers/EmployeeManagementRouter');
 const TaskAndProjectRouter = require('./routers/TaskAndProjectRouter');
 const SystemMonitorRouter = require('./routers/SystemMonitorRouter');
 
-app.use('/employee', verifyToken, EmployeeManagementRouter);
+app.use('/employee', EmployeeManagementRouter);
 app.use('/api', TaskAndProjectRouter);
 app.use('/shift', SystemMonitorRouter);
 
