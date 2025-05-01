@@ -1,22 +1,20 @@
 //Import Dependencies
-require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const port = 3030;
 const host = '127.0.0.1';
 const mongoose = require('mongoose');
-const firebaseAdmin = require('firebase-admin');
+const router = require('./routers/testRouter');
+const TaskAndProjectRouter = require('./routers/TaskAndProjectRouter');
+const employeeRouter = require('./routers/EmployeeManagementRouter');
 
-
-const verifyToken = require('./middlewares/authMiddleware'); // Firebase authentication middleware
-
-// Use Dependencies
+//Use Dependecies
 app.use(cors());
 app.use(express.json());
 
 //Database Connection
-const uri = process.env.MONGO_URI;
+const uri = 'mongodb+srv://Yasiru:ynb89@cluster0.bg2dx4x.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 const connect = async() => {
     try {
         await mongoose.connect(uri);
@@ -28,17 +26,24 @@ const connect = async() => {
 
 connect();
 
-// Server
+//Server 
 const server = app.listen(port, host, () => {
     console.log(`Server is running on ${server.address().port}`);
 });
 
-// Routes
+const PostRouter = require('./routers/PostRoutes');
+app.use ('/employee',employeeRouter)
 
-const employeeRouter = require('./routers/EmployeeManagementRouter');
-const TaskAndProjectRouter = require('./routers/TaskAndProjectRouter');
+
+
+
 
 app.use('/employee',  employeeRouter);
+app.use('/api',router)
 app.use('/api', TaskAndProjectRouter);
+app.use('/post',PostRouter);
 
-
+// app.use('/api',router)
+// app.use('/api',router)
+// app.use('/api',router)
+app.use('/api',router)
