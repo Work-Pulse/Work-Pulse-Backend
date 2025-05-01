@@ -34,11 +34,24 @@ const server = app.listen(port, host, () => {
 
 // Routes
 const EmployeeManagementRouter = require('./routers/EmployeeManagementRouter');
-const TaskAndProjectRouter = require('./routers/TaskAndProjectRouter');
-const SystemMonitorRouter = require('./routers/SystemMonitorRouter');
-
 app.use('/employee', EmployeeManagementRouter);
+
+const employeeRouter = require('./routers/EmployeeManagementRouter')
+app.use ('/employee',employeeRouter)
+
+const LeaveRouter = require('./routers/LeaveApprovalRouter')
+app.use ('/leave',LeaveRouter)
+
+const TaskAndProjectRouter = require('./routers/TaskAndProjectRouter');
 app.use('/api', TaskAndProjectRouter);
+
+const SystemMonitorRouter = require('./routers/SystemMonitorRouter');
 app.use('/shift', SystemMonitorRouter);
 
 
+
+
+
+// app.use('/api',router)
+// app.use('/api',router)
+// app.use('/api',router)
