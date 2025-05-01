@@ -3,7 +3,7 @@ const path = require('path');
 
 // Initialize Firebase Admin SDK with the service account credentials
 firebaseAdmin.initializeApp({
-  credential: firebaseAdmin.credential.cert(path.join('D:', 'Educational Projects', 'Work Pulse', 'Security Key', 'firebase-service-account.json')), // Absolute path to the service account JSON
+  credential: firebaseAdmin.credential.cert(path.join('D:', 'WorkPulse', 'firebase-service-account.json')), // Absolute path to the service account JSON
 });
 
 const verifyToken = async (req, res, next) => {

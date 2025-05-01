@@ -38,7 +38,7 @@ const server = app.listen(port, host, () => {
 const employeeRouter = require('./routers/EmployeeManagementRouter');
 const TaskAndProjectRouter = require('./routers/TaskAndProjectRouter');
 
-app.use('/employee', verifyToken, employeeRouter);
+app.use('/employee',  employeeRouter);
 app.use('/api', TaskAndProjectRouter);
 
 
