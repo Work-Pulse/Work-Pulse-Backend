@@ -143,11 +143,34 @@ const getEmployeeData = async (req, res) => {
   }
 };
 
+// Update employee details by officeMail
+const updateEmployee = async (req, res) => {
+  const { officeMail } = req.params;
+  const { designation, department, personalMail, personalPhone, address } = req.body;
+
+  try {
+    const updated = await employeeModel.findOneAndUpdate(
+      { officeMail },
+      { designation, department, personalMail, personalPhone, address },
+      { new: true }
+    );
+
+    if (!updated) {
+      return res.status(404).json({ error: "Employee not found" });
+    }
+
+    res.json({ message: "Employee updated successfully", employee: updated });
+  } catch (error) {
+    console.error("Update error:", error);
+    res.status(500).json({ error: "Failed to update employee" });
+  }
+};
 
 module.exports = {
   fetchEmployees,
   createEmployee,
   loginEmployee,
   getEmployeeData,
+  updateEmployee,
   authenticate
 };
