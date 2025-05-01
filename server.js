@@ -33,12 +33,22 @@ const server = app.listen(port, host, () => {
     console.log(`Server is running on ${server.address().port}`);
 });
 
-// Routes
+const PostRouter = require('./routers/PostRoutes');
+const employeeRouter = require('./routers/EmployeeManagementRouter')
+app.use ('/employee',employeeRouter)
 
-const employeeRouter = require('./routers/EmployeeManagementRouter');
+app.use('/api',router)
+
+app.use('/post',PostRouter);
+
+const LeaveRouter = require('./routers/LeaveApprovalRouter')
+app.use ('/leave',LeaveRouter)
+
 const TaskAndProjectRouter = require('./routers/TaskAndProjectRouter');
 
 app.use('/employee', verifyToken, employeeRouter);
 app.use('/api', TaskAndProjectRouter);
 
-
+// app.use('/api',router)
+// app.use('/api',router)
+// app.use('/api',router)
