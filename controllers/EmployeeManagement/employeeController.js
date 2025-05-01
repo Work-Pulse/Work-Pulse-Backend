@@ -66,8 +66,6 @@ const updateEmployee = async (req, res) => {
   const {
     firstName,
     lastName,
-    designation,
-    department,
     officeMail,
     personalMail,
     officePhone,
@@ -75,8 +73,6 @@ const updateEmployee = async (req, res) => {
     joinDate,
     birthday,
     address,
-    password,
-    confirmPassword
   } = req.body;
 
   try {
@@ -86,8 +82,7 @@ const updateEmployee = async (req, res) => {
     await employeeModel.findByIdAndUpdate(employeeId, {
       firstName,
       lastName,
-      designation,
-      department,
+      
       officeMail,
       personalMail,
       officePhone,
@@ -95,8 +90,6 @@ const updateEmployee = async (req, res) => {
       joinDate,
       birthday,
       address,
-      password: hashedPassword,
-      confirmPassword: hashedPassword
     });
 
     const updatedEmployee = await employeeModel.findById(employeeId);
@@ -160,6 +153,13 @@ const getEmployeeData = async (req, res) => {
       lastName: employee.lastName,
       designation: employee.designation,
       department: employee.department,
+      officeMail:employee.officeMail,
+      personalMail:employee.personalMail,
+      officePhone:employee.officePhone,
+      personalPhone:employee.personalPhone,
+      joinDate:employee.joinDate,
+      birthday:employee.birthday,
+      address:employee.address,
     });
   } catch (error) {
     console.error("Error fetching employee data:", error);
