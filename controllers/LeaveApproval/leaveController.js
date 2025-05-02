@@ -92,13 +92,25 @@ const updateLeave = async (req, res) => {
 };
 
 // Delete leave
+// Backend: delete by leave _id
 const deleteLeave = async (req, res) => {
-  const leaveId = req.params.id;
+  const { id } = req.params;
 
-  await leaveModel.deleteOne({ _id: leaveId });
+  try {
+    const deletedLeave = await leaveModel.findByIdAndDelete(id);
 
-  res.json({ success: "Leave request deleted" });
+    if (!deletedLeave) {
+      return res.status(404).json({ error: "Leave record not found" });
+    }
+
+    res.json({ message: "Leave record deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting leave record:", error);
+    res.status(500).json({ error: "Failed to delete leave record" });
+  }
 };
+
+
 
 // Approve leave
 const approveLeave = async (req, res) => {
