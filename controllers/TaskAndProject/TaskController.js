@@ -71,6 +71,10 @@ exports.updateTask = async (req, res) => {
             return res.status(404).json({ error: "Task not found" });
         }
 
+        // if (!Object.prototype.hasOwnProperty.call(updates, "submitted")) {
+        //     updates.submitted = existingTask.submitted;
+        //   }
+
         res.status(200).json(updatedTask);
 
     } catch (err) {

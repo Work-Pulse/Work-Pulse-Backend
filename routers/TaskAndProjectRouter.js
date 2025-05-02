@@ -16,6 +16,6 @@ router.delete("/delete-task/:taskId", TaskController.deleteTask);
 router.put("/update/:taskId", TaskController.updateTask);
 
 // Auth/Login Route
-router.post("/validate-login", LoginController.validateLogin);
+// router.post("/validate-login", LoginController.validateLogin);
 
 module.exports = router;
