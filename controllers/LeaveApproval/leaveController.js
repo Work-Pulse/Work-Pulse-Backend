@@ -65,7 +65,8 @@ const updateLeave = async (req, res) => {
     leaveType,
     startDate,
     endDate,
-    leaveTime
+    leaveTime,
+    status
   } = req.body;
 
   try {
@@ -75,7 +76,8 @@ const updateLeave = async (req, res) => {
         leaveType,
         startDate,
         endDate,
-        leaveTime
+        leaveTime,
+        status
       },
       { new: true }
     );

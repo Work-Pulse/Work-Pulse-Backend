@@ -4,11 +4,7 @@ const Schema = mongoose.Schema;
 const LeaveSchema = new Schema({
   firstName: { type: String, required: true },
   officeMail: { type: String, required: true },
-  leaveType: { 
-    type: String, 
-    required: true,
-    enum: ["Annual", "Sick", "Half Day", "Casual"], // Example leave types
-  },
+  leaveType: { type: String, required: true,},
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
   leaveTime: { type: String }, // Only relevant for Half Day leaves
