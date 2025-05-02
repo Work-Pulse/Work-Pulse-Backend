@@ -19,6 +19,16 @@ exports.addTask = async (req, res) => {
     }
 };
 
+// Get All Tasks
+exports.getAllTasks = async (req, res) => {
+    try {
+        const tasks = await Task.find({});
+        res.status(200).json(tasks);
+    } catch (err) {
+        res.status(500).json({ error: "Server error" });
+    }
+};
+
 // Get Tasks by User ID
 exports.getTasksByUser = async (req, res) => {
     try {
@@ -38,5 +48,32 @@ exports.deleteTask = async (req, res) => {
         res.status(200).json({ message: "Task deleted successfully" });
     } catch (err) {
         res.status(500).json({ error: "Server error" });
+    }
+};
+
+// Update Task
+exports.updateTask = async (req, res) => {
+    try {
+        const { taskId } = req.params;
+        const updateData = req.body;
+
+        // Optional: Validate required fields if needed
+        if (!taskId) {
+            return res.status(400).json({ error: "Task ID is required" });
+        }
+
+        const updatedTask = await Task.findByIdAndUpdate(taskId, updateData, {
+            new: true, // return the updated document
+            runValidators: true, // apply schema validation
+        });
+
+        if (!updatedTask) {
+            return res.status(404).json({ error: "Task not found" });
+        }
+
+        res.status(200).json(updatedTask);
+
+    } catch (err) {
+        res.status(500).json({ error: "Server error", details: err.message });
     }
 };
