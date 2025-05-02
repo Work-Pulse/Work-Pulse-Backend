@@ -1,11 +1,26 @@
 const employeeModel = require("../../models/EmployeeManagementModels/employeeModel");
 const bcrypt = require("bcryptjs");
 
-// Fetch All Employees
 const fetchEmployees = async (req, res) => {
-  const employees = await employeeModel.find();
-  res.json({ employees });
+  try {
+    const employees = await employeeModel.find({}, 'employeeId firstName lastName').lean();
+    res.json(
+      employees.map(emp => ({
+        employeeId: emp.employeeId,
+        name: `${emp.firstName} ${emp.lastName}`,
+      }))
+    );
+  } catch (err) {
+    res.status(500).json({
+      error: 'Failed to fetch employees',
+      details: err.message,
+    });
+  }
 };
+
+
+
+
 
 // Fetch Single Employee
 const fetchEmployee = async (req, res) => {
