@@ -1,5 +1,6 @@
 //Import Dependencies
 require('dotenv').config();
+require('punycode');
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -8,10 +9,14 @@ const host = '127.0.0.1';
 const mongoose = require('mongoose');
 const firebaseAdmin = require('firebase-admin');
 
-const verifyToken = require('./middlewares/authMiddleware'); // Firebase authentication middleware
+const verifyToken = require('./middlewares/authMiddleware'); 
 
 // Use Dependencies
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173',
+    methods: ['GET','POST','DELETE','PUT'],
+    allowedHeaders: ['Content-Type','Authorization']
+  }));
 app.use(express.json());
 
 //Database Connection
@@ -33,9 +38,6 @@ const server = app.listen(port, host, () => {
 });
 
 // Routes
-const EmployeeManagementRouter = require('./routers/EmployeeManagementRouter');
-app.use('/employee', EmployeeManagementRouter);
-
 const employeeRouter = require('./routers/EmployeeManagementRouter')
 app.use ('/employee',employeeRouter)
 
@@ -48,10 +50,5 @@ app.use('/api', TaskAndProjectRouter);
 const SystemMonitorRouter = require('./routers/SystemMonitorRouter');
 app.use('/shift', SystemMonitorRouter);
 
-
-
-
-
-// app.use('/api',router)
-// app.use('/api',router)
-// app.use('/api',router)
+const chatRouter = require('./routers/ChatRouter');
+app.use('/chat', chatRouter);

@@ -30,13 +30,25 @@ const authenticate = async (req, res, next) => {
 // Fetch All Employees (Authenticated)
 const fetchEmployees = async (req, res) => {
   try {
-    const employees = await employeeModel.find();
-    res.json({ employees });
-  } catch (error) {
-    console.error("Error fetching employees:", error);
-    res.status(500).json({ error: "Failed to fetch employees" });
+    // only select the fields you need
+    const employees = await employeeModel.find({}, 'employeeId firstName lastName').lean();
+
+    // map into the shape you want
+    const result = employees.map(emp => ({
+      employeeId: emp.employeeId,
+      name: `${emp.firstName} ${emp.lastName}`
+    }));
+
+    return res.json(result);
+  } catch (err) {
+    console.error("Fetch Employees Error:", err);
+    return res.status(500).json({
+      error: 'Failed to fetch employees',
+      details: err.message
+    });
   }
 };
+
 
 // Create Employee (Authenticated)
 const createEmployee = async (req, res) => {
