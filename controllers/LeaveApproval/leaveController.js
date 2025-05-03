@@ -93,7 +93,6 @@ const updateLeave = async (req, res) => {
   }
 };
 
-// Delete leave
 // Backend: delete by leave _id
 const deleteLeave = async (req, res) => {
   const { id } = req.params;

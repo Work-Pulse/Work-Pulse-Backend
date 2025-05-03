@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const leaveController = require("../controllers/LeaveApproval/leaveController");
+const verifyToken = require('./../middlewares/authMiddleware');
 
-router.post("/leaves", leaveController.createLeave); // create
+router.post("/leaves", verifyToken, leaveController.createLeave); // create
 router.get("/leave/data/:officemail", leaveController.fetchLeave); // retrieve
 router.put("/leave/update/:officeMail", leaveController.updateLeave); // update
 router.delete("/leave/delete/:id", leaveController.deleteLeave); // delete
