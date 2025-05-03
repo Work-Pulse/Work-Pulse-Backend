@@ -9,9 +9,10 @@ const TaskSchema = new mongoose.Schema({
     duration: { type: String, required: true },
     description: { type: String, default: "No description" },
     deadline: { type: String, required: true },
-
     completed: { type: Boolean, default: false },
-});
+  }, {
+    timestamps: true  // <— this adds createdAt & updatedAt
+  });
 
 const TaskModel = mongoose.model('task', TaskSchema);
 module.exports = TaskModel;

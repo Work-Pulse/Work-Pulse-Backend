@@ -47,6 +47,7 @@ app.use ('/leave',LeaveRouter)
 
 const TaskAndProjectRouter = require('./routers/TaskAndProjectRouter');
 app.use('/api', TaskAndProjectRouter);
+app.use("/api/report", TaskAndProjectRouter);
 
 const SystemMonitorRouter = require('./routers/SystemMonitorRouter');
 app.use('/shift', SystemMonitorRouter);
