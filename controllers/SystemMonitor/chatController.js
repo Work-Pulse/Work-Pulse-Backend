@@ -21,38 +21,36 @@ async function sendEmployeeMessage(req, res) {
   }
 }
 
-// EMPLOYEE: fetch messages
+// EMPLOYEE: fetch two‐way chat
 async function getEmployeeMessages(req, res) {
   const officeMail = req.user.email;
   try {
     const msgs = await Chat.find({
       $or: [
-        { senderId: officeMail, deletedByEmployee: false },
-        { receiverId: officeMail, deletedByEmployee: false }
+        { senderId: officeMail },
+        { receiverId: officeMail }
       ]
-    }).sort({ timestamp: 1 });
-    res.json(msgs);
+    })
+    .sort({ timestamp: 1 });
+    return res.json(msgs);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Failed to fetch messages' });
+    return res.status(500).json({ error: 'Failed to fetch messages' });
   }
 }
 
-// EMPLOYEE: delete own message
+// — EMPLOYEE deletes their own message for good —
 async function deleteByEmployee(req, res) {
-  const officeMail = req.user.email;
   const { id } = req.params;
   try {
-    const msg = await Chat.findById(id);
-    if (!msg || msg.senderId !== officeMail) {
-      return res.status(403).json({ error: 'Not allowed' });
+    const deleted = await Chat.findByIdAndDelete(id);
+    if (!deleted) {
+      return res.status(404).json({ error: 'Message not found' });
     }
-    msg.deletedByEmployee = true;
-    await msg.save();
-    res.json({ message: 'Deleted' });
+    return res.json({ message: 'Message permanently deleted' });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Delete failed' });
+    return res.status(500).json({ error: 'Failed to delete message' });
   }
 }
 
@@ -69,16 +67,17 @@ async function getEmployeeListForManager(req, res) {
   }
 }
 
-// fetch a two-way conversation with one specific employee
+// MANAGER: fetch two‐way chat with a specific employee
 async function getManagerMessages(req, res) {
   const { officeMail } = req.params;
   try {
     const msgs = await Chat.find({
       $or: [
-        { senderId: officeMail, deletedByManager: false },
-        { receiverId: officeMail, deletedByManager: false }
+        { senderId: officeMail },
+        { receiverId: officeMail }
       ]
-    }).sort({ timestamp: 1 });
+    })
+    .sort({ timestamp: 1 });
     return res.json(msgs);
   } catch (err) {
     console.error(err);
@@ -105,21 +104,18 @@ async function sendManagerMessage(req, res) {
   }
 }
 
-// mark a manager-sent message “deleted” just for the manager
+// — MANAGER deletes their own 
 async function deleteByManager(req, res) {
   const { id } = req.params;
   try {
-    const msg = await Chat.findById(id);
-    if (!msg) return res.status(404).json({ error: 'Not found' });
-    if (msg.senderType !== 'manager') {
-      return res.status(403).json({ error: 'Cannot delete this message' });
+    const deleted = await Chat.findByIdAndDelete(id);
+    if (!deleted) {
+      return res.status(404).json({ error: 'Message not found' });
     }
-    msg.deletedByManager = true;
-    await msg.save();
-    return res.json({ message: 'Deleted' });
+    return res.json({ message: 'Message permanently deleted' });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: 'Delete failed' });
+    return res.status(500).json({ error: 'Failed to delete message' });
   }
 }
 

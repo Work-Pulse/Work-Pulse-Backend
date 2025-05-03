@@ -15,6 +15,9 @@ router.get("/get-tasks/:userId", TaskController.getTasksByUser);
 router.delete("/delete-task/:taskId", TaskController.deleteTask);
 router.put("/update/:taskId", TaskController.updateTask);
 
+router.patch("/update-task-status/:taskId", TaskController.updateTaskStatus);
+
+
 // Auth/Login Route
 router.post("/validate-login", LoginController.validateLogin);
 

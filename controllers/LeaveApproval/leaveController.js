@@ -60,25 +60,13 @@ const createLeave = async (req, res) => {
 
 // Update leave
 const updateLeave = async (req, res) => {
-  const { officeMail } = req.params;
-  const {
-    leaveType,
-    startDate,
-    endDate,
-    leaveTime,
-    status
-  } = req.body;
+  const { id } = req.params;
+  const { leaveType, startDate, endDate, leaveTime, status } = req.body;
 
   try {
-    const updatedLeave = await leaveModel.findOneAndUpdate(
-      { officeMail },
-      {
-        leaveType,
-        startDate,
-        endDate,
-        leaveTime,
-        status
-      },
+    const updatedLeave = await leaveModel.findByIdAndUpdate(
+      id,
+      { leaveType, startDate, endDate, leaveTime, status },
       { new: true }
     );
 
@@ -93,7 +81,6 @@ const updateLeave = async (req, res) => {
   }
 };
 
-// Delete leave
 // Backend: delete by leave _id
 const deleteLeave = async (req, res) => {
   const { id } = req.params;
