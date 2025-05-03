@@ -176,11 +176,27 @@ const updateEmployee = async (req, res) => {
   }
 };
 
+// delete an employee by officeMail
+const deleteEmployee = async (req, res) => {
+  const { officeMail } = req.params;
+  try {
+    const deleted = await employeeModel.findOneAndDelete({ officeMail });
+    if (!deleted) {
+      return res.status(404).json({ error: "Employee not found" });
+    }
+    return res.json({ message: "Employee deleted successfully" });
+  } catch (error) {
+    console.error("Delete error:", error);
+    return res.status(500).json({ error: "Failed to delete employee" });
+  }
+};
+
 module.exports = {
   fetchEmployees,
   createEmployee,
   loginEmployee,
   getEmployeeData,
   updateEmployee,
+  deleteEmployee,
   authenticate
 };

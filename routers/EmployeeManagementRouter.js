@@ -10,6 +10,10 @@ router.get("/employees", employeeController.fetchEmployees);//Devram
 router.post("/employee/login", verifyToken, employeeController.loginEmployee);
 router.get("/employee/data/:officeMail", verifyToken, employeeController.getEmployeeData); 
 router.put("/employee/update/:officeMail", verifyToken, employeeController.updateEmployee);
-
+router.delete(
+    "/employee/delete/:officeMail",
+    verifyToken,
+    employeeController.deleteEmployee
+  );
 
 module.exports = router;
