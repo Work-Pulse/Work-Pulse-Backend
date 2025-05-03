@@ -93,28 +93,28 @@ const createEmployee = async (req, res) => {
   }
 };
 
-// Employee Login with officeMail + firebaseToken (Authenticated)
+// EmployeeLogin with Firebase token
 const loginEmployee = async (req, res) => {
-  const { officeMail, password } = req.body;
+  // req.user was set by verifyToken → contains decodedToken
+  const officeMail = req.user.email;
 
   try {
     const employee = await employeeModel.findOne({ officeMail });
-
     if (!employee) {
       return res.status(404).json({ error: "Employee not found" });
     }
 
-    // If employee found, send back officeMail and Firebase UID
+    // Return whatever profile fields you need
     res.json({
       message: "Login successful",
       employee: {
-        id: employee._id,
-        firstName: employee.firstName,
-        lastName: employee.lastName,
-        designation: employee.designation,
+        employeeId: employee.employeeId,
+        firstName:  employee.firstName,
+        lastName:   employee.lastName,
+        designation:employee.designation,
         department: employee.department,
-        officeMail: employee.officeMail,
-      },
+        officeMail: employee.officeMail
+      }
     });
   } catch (error) {
     console.error("Login error:", error);
